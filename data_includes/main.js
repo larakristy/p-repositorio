@@ -78,4 +78,39 @@ Template("tabela_script_auditivo.csv",
             .size( 90 , 90 )
             .print()
        
-        ,v
+        ,
+       //Cria um novo texto nomeado "A" e "variable" aponta para todas as linhas da coluna "SentencaA" e imprime o texto presente nelas 
+        newText("A",variable.SentencaA)
+        ,
+        newText("B",variable.SentencaB)
+        ,        //Cria um canvas (uma caixa) e coloca os textos "A" e "B" um ao lado do outro
+        newCanvas( 1400 , 700 )
+            .add( 150 , 100 , getText("A") )
+            .add( 850 , 100 , getText("B") )
+            .print() //Agora, dentro do canvas, é que os textos "A" e "B" serão impressos na tela
+        ,        //Possibilita a seleção dos textos "A" e "B" através do mouse ou das teclas "A" e "B". Também envia para o arquivo "result" qual texto foi selecionado
+        newSelector()
+            .add( getText("A") , getText("B") )
+            .keys("A","B")
+            .log()
+            .wait()
+    )
+         
+    //Envia para o arquivo "results" o conteúdo da coluna "Group" 
+    .log("Group", variable.Group)
+    .log("Item", variable.Item)
+);//Nova Tela - Tela final    
+newTrial( "Final" ,
+    newText("<p> O experimento foi conclu&iacute;do. Obrigada pela participa&ccedil;&atilde;o!</p>")
+        .css("font-size","1.2em")
+        .print()
+    ,
+    newText("<p> Voc&ecirc; receber&aacute; um e-mail com a sua declara&ccedil;&atilde;o de participa&ccedil;&atilde;o.</p>")
+        .css("font-size","1.2em")
+        .print()
+        .wait()
+ )
+
+//Ajeita a barra de pogresso para que ela fique completa
+.setOption("countsForProgressBar",false);
+//Fim do Script
