@@ -23,9 +23,9 @@ Header(
             .center()
             .print()
             .wait()       
-
-
 )
+
+
 //Cria uma nova tela - Tela de coleta de dados do participante
 newTrial("Participante",
 
@@ -41,26 +41,13 @@ newTrial("Participante",
          ,
          newText("<p>Agora selecione sua ESCOLARIDADE na caixa abaixo e aperte o botão 'Iniciar' para começar </p>")
          , 
-//Cria uma caixa com seletores nomeada "Escolaridade" para que o participante selecione sua escolaridade         newDropDown("Escolaridade", "Selecione sua escolaridade")
+//Cria uma caixa com seletores nomeada "Escolaridade" para que o participante selecione sua escolaridade
+         newDropDown("Escolaridade", "Selecione sua escolaridade")
                   .add("Médio completo", "Superior em curso", "Superior completo", "Pós-graduação")
                   .css("font-size","1.2em")
                   .print()
                   .log() //Envia para o arquivo "results" a opção selecionada pelo participante 
          ,
-newTrial("Participante",
-
-//Cria o texto "Bem-Vindos!"
-         newText("<p>Bem-Vindos!</p>")
-         ,
-         newText("<p>Neste experimento, você vai ouvir uma frase e depois deve escolher a melhor opção de interpretação para ela.</p>")
-         ,
-         newText("<p>Por favor, escreva seu NOME COMPLETO na caixa abaixo.</p>")
-         ,
-//Cria uma caixa de texto nomedada "Nome" para receber o nome do participante  
-         newTextInput("Nome")
-         ,
-         newText("<p>Agora selecione sua ESCOLARIDADE na caixa abaixo e aperte o botão 'Iniciar' para começar </p>")
-         , 
 //Cria um botão nomeado "Iniciar"
          newButton("Iniciar")
          ,
@@ -84,28 +71,42 @@ newTrial("Instrucoes",
     newButton("Iniciar")
         .log()
 )
+
 //Indica o uso da tabela "treino_script_auditivo.csv"
 Template("tabela_script_auditivo.csv",
 // "variable" vai automaticamente apontar para cada linha da tabela "tabela_script_auditivo.csv"
     variable => newTrial( "Experimento",
-//"variable" aponta para todas as linhas da coluna "AudioExperimento" da tabela "tabela_script_auditivo.csv" e toca o audio referente a elas        newAudio("AudioExperimento", variable.AudioExperimento)
+//"variable" aponta para todas as linhas da coluna "AudioExperimento" da tabela "tabela_script_auditivo.csv" e toca o audio referente a elas
+        newAudio("AudioExperimento", variable.AudioExperimento)
             .play()
-        ,//Exibe na tela a imagem "alto_falante_icone.png"
+        ,
+//Exibe na tela a imagem "alto_falante_icone.png"
         newImage("alto_falante_icone.png")
             .size( 90 , 90 )
             .print()
        
         ,
-       //Cria um novo texto nomeado "A" e "variable" aponta para todas as linhas da coluna "SentencaA" e imprime o texto presente nelas 
+//Cria um botão nomeado "Próximo", envia para o arquivo "results" a informação de quando ele foi pressionado e remove ele da tela
+        newButton("Próximo")
+            .log()
+            .remove()
+        ,
+//Remove a imagem "alto_falante_icone.png" 
+        getImage("alto_falante_icone.png")
+            .remove()
+        ,
+        //Cria um novo texto nomeado "A" e "variable" aponta para todas as linhas da coluna "SentencaA" e imprime o texto presente nelas 
         newText("A",variable.SentencaA)
         ,
         newText("B",variable.SentencaB)
-        ,        //Cria um canvas (uma caixa) e coloca os textos "A" e "B" um ao lado do outro
+        ,
+        //Cria um canvas (uma caixa) e coloca os textos "A" e "B" um ao lado do outro
         newCanvas( 1400 , 700 )
             .add( 150 , 100 , getText("A") )
             .add( 850 , 100 , getText("B") )
             .print() //Agora, dentro do canvas, é que os textos "A" e "B" serão impressos na tela
-        ,        //Possibilita a seleção dos textos "A" e "B" através do mouse ou das teclas "A" e "B". Também envia para o arquivo "result" qual texto foi selecionado
+        ,
+        //Possibilita a seleção dos textos "A" e "B" através do mouse ou das teclas "A" e "B". Também envia para o arquivo "result" qual texto foi selecionado
         newSelector()
             .add( getText("A") , getText("B") )
             .keys("A","B")
@@ -116,7 +117,9 @@ Template("tabela_script_auditivo.csv",
     //Envia para o arquivo "results" o conteúdo da coluna "Group" 
     .log("Group", variable.Group)
     .log("Item", variable.Item)
-);//Nova Tela - Tela final    
+);
+
+//Nova Tela - Tela final    
 newTrial( "Final" ,
     newText("<p> O experimento foi conclu&iacute;do. Obrigada pela participa&ccedil;&atilde;o!</p>")
         .css("font-size","1.2em")
