@@ -44,3 +44,38 @@ newTrial("Participante",
          ,
          newText("<p>Agora selecione sua ESCOLARIDADE na caixa abaixo e aperte o botão 'Iniciar' para começar </p>")
          , 
+//Cria um botão nomeado "Iniciar"
+         newButton("Iniciar")
+         ,
+//Cria uma nova variável chamada "NOME" que recebe o conteúdo da caixa de texto "Nome"
+    newVar("NOME")
+        .global()
+        .set( getTextInput("Nome") )
+)
+
+//Envia para o arquivo "results" o conteúdo da variável "NOME"
+.log( "NOME" , getVar("NOME") )
+
+//Nova tela - Tela de instruções do treino
+newTrial("Instrucoes",
+         
+    newText("<p>INSTRUÇÕES:</p>")
+    ,
+    newText("<p>Ouça a frase com atenção e depois clique em cima de uma das sentenças, <strong>A</strong> ou <strong>B</strong>, que você considerar a melhor interepretação.</p>")
+    ,    
+    //Cria um novo botão nomeado "Iniciar" e envia para o arquivo "results" a informação de quando ele é pressionado
+    newButton("Iniciar")
+        .log()
+)
+//Indica o uso da tabela "treino_script_auditivo.csv"
+Template("tabela_script_auditivo.csv",
+// "variable" vai automaticamente apontar para cada linha da tabela "tabela_script_auditivo.csv"
+    variable => newTrial( "Experimento",
+//"variable" aponta para todas as linhas da coluna "AudioExperimento" da tabela "tabela_script_auditivo.csv" e toca o audio referente a elas        newAudio("AudioExperimento", variable.AudioExperimento)
+            .play()
+        ,//Exibe na tela a imagem "alto_falante_icone.png"
+        newImage("alto_falante_icone.png")
+            .size( 90 , 90 )
+            .print()
+       
+        ,v
